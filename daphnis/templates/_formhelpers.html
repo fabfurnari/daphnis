@@ -1,0 +1,33 @@
+{% macro render_field(field) %}
+<div class="form-group">
+    {% if field.type == 'BooleanField' %}
+    <div class="checkbox">
+      <label>
+        {% if field.flags.required %}
+        {{ field(placeholder=field.label.text,required=field.flags.required,**kwargs) }}
+        {% else %}
+        {{ field(placeholder=field.label.text,**kwargs) }}
+        {% endif %}
+        {{ field.label }}
+      </label>
+    </div>
+    {% else %}
+    {% if field.flags.required %}
+    <dd>{{ field(class="form-control",placeholder=field.label.text,required=field.flags.required,**kwargs) }}
+      {% else %}
+    <dd>{{ field(class="form-control",placeholder=field.label.text,**kwargs) }}
+      {% endif %}
+      {% if field.errors %}
+      <div class="alert alert-danger">
+        {% for error in field.errors %}
+        <strong>{{ error }}</strong>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </dd>
+    {% endif %}
+
+</div>
+{% endmacro %}
+
+
