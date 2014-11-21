@@ -1,4 +1,4 @@
-from flask import request, g, render_template
+from flask import request, g, render_template, flash, redirect, url_for
 from flask.ext.login import LoginManager, login_user, \
      logout_user, current_user, login_required
      
@@ -54,6 +54,16 @@ def logout():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    form = AddFeedForm()
+    return render_template('index.html', form=form)
+
+@app.route('/user/<username>')
+def profile(username):
+    return NotImplementedError
+
+@app.route('/add', methods=['POST'])
+def add_feed():
+    pass
+    
 
 # end main views
