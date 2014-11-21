@@ -36,11 +36,6 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            {% if current_user.is_authenticated() %}
-            <li><a href="{{ url_for('user_entries',
-                         username=current_user.username) }}">My entries</a></li>
-            <li><a href="{{ url_for('add_entry') }}">Add a new entry</a></li>
-            {% endif %}
           </ul>
           <ul class="nav navbar-nav navbar-right">
             {% if current_user.is_authenticated() %}

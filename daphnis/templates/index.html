@@ -1,6 +1,19 @@
 {% extends "base.html" %}
+{% block localcss %}
+<link rel="stylesheet" type="text/css" href="/static/css/jquery.tagsinput.css"
+      />
+{% endblock -%}
 {% block body %}
 
 <h1>Nothing so far...</h1>
+
+{% if current_user.is_authenticated() %}
+    {% include 'add_entry.html' %}
+{% endif %}
+
 {% endblock -%}
 
+{% block localjs %}
+<script src="/static/js/jquery.tagsinput.min.js"></script>
+<script type="text/javascript" src="/static/js/daphnis-index.js"></script>
+{% endblock -%}

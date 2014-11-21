@@ -1,0 +1,24 @@
+{% from "_formhelpers.html" import render_field %}
+<div class="container">
+<div class="container">
+  <button type="button" 
+          id="addEntry" 
+          data-loading-text="Adding..." 
+          class="btn btn-primary"
+          autocomplete="off">Add an entry</button>
+  
+</div>
+<div id="addEntryForm">
+<form method=post action="{{ url_for('add_feed') }}">
+  {{ form.hidden_tag() }}
+  <dl>
+    {{ render_field(form.url) }}
+    {{ render_field(form.tags) }}
+  </dl>
+    <div class="form-group">
+    <button type="submit" class="btn btn-default btn-lg" value="Add">Add entry</button>
+    </div>
+</form>
+</div>
+
+</div>

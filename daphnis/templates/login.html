@@ -2,6 +2,7 @@
 {% block body %}
 
 {% from "_formhelpers.html" import render_field %}
+<div class="container">
 <form method=post action="" role="form">
   <h2>Daphnis - Login</h2>
   {{ form.hidden_tag() }}
@@ -14,5 +15,7 @@
     <button type="submit" class="btn btn-default btn-lg" value="Login">Login</button>
     </div>
 </form>
+</div>
 {% endblock %}
+
 
