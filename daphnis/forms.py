@@ -67,3 +67,16 @@ class RegisterForm(Form):
             db.session.commit()
 
         return True
+
+class AddFeedForm(Form):
+    url = TextField(u'URL', [Required()])
+    tags = TextField(u'tags')
+
+    def __init__(self, *args, **kwargs):
+        Form.__init__(self, *args, **kwargs)
+        self.user = None
+
+    def validate(self):
+        rv = Form.validate(self)
+        if not rv:
+            return False
