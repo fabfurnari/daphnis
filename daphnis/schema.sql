@@ -1,11 +1,5 @@
 PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
-CREATE TABLE tag (
-	id INTEGER NOT NULL, 
-	name VARCHAR(80), 
-	PRIMARY KEY (id), 
-	UNIQUE (name)
-);
 CREATE TABLE user (
 	id INTEGER NOT NULL, 
 	username VARCHAR(80), 
@@ -17,6 +11,12 @@ CREATE TABLE user (
 	UNIQUE (username), 
 	UNIQUE (email)
 );
+CREATE TABLE tag (
+	id INTEGER NOT NULL, 
+	name VARCHAR(80), 
+	PRIMARY KEY (id), 
+	UNIQUE (name)
+);
 CREATE TABLE feed (
 	id INTEGER NOT NULL, 
 	title VARCHAR(200), 
@@ -27,12 +27,6 @@ CREATE TABLE feed (
 	UNIQUE (url), 
 	FOREIGN KEY(user_id) REFERENCES user (id)
 );
-CREATE TABLE tagmap (
-	tag_id INTEGER, 
-	feed_id INTEGER, 
-	FOREIGN KEY(tag_id) REFERENCES tag (id), 
-	FOREIGN KEY(feed_id) REFERENCES feed (id)
-);
 CREATE TABLE entry (
 	id INTEGER NOT NULL, 
 	title VARCHAR(120), 
@@ -41,6 +35,12 @@ CREATE TABLE entry (
 	pubdate DATETIME, 
 	feed_id INTEGER, 
 	PRIMARY KEY (id), 
+	FOREIGN KEY(feed_id) REFERENCES feed (id)
+);
+CREATE TABLE tagmap (
+	tag_id INTEGER, 
+	feed_id INTEGER, 
+	FOREIGN KEY(tag_id) REFERENCES tag (id), 
 	FOREIGN KEY(feed_id) REFERENCES feed (id)
 );
 COMMIT;

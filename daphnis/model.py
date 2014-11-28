@@ -9,7 +9,7 @@ class User(db.Model):
     password = db.Column(db.String(120))
     registered_on = db.Column(db.DateTime)
     last_login = db.Column(db.DateTime)
-    feeds = db.relationship('Feed',backref='author',lazy='joined')
+    feeds = db.relationship('Feed',backref='author',lazy='dynamic')
 
     def __init__(self, username, email, password):
         self.username = username
@@ -50,7 +50,7 @@ class Feed(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     tags = db.relationship('Tag', secondary=tagmap,
                            backref='feeds')
-
+    entries = db.relationship('Entry', backref='site',lazy='dynamic')
 
     def __init__(self, title, url, tags, user_id):
         self.title = title
@@ -58,7 +58,6 @@ class Feed(db.Model):
         self.tags = tags
         self.user_id = user_id
         
-
     def __repr__(self):
         return '<Feed %r>' % self.title
 
@@ -73,21 +72,33 @@ class Tag(db.Model):
 
     def __repr__(self):
         return '<Tag %r>' % self.name
-
     
 class Entry(db.Model):
     __tablename__ = 'entry'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
+    summary = db.Column(db.Text)
     description = db.Column(db.Text)
     link = db.Column(db.String(200))
-    pubdate = db.Column(db.DateTime)
+    pub_date = db.Column(db.DateTime)
+    parse_date = db.Column(db.DateTime)
+    feed_id = db.Column(db.ForeignKey('feed.id'))
 
-    def __init__(self, title, description, link, pubdate):
+    def __init__(self,
+                 title,
+                 summary,
+                 description,
+                 link,
+                 pub_date,
+                 parse_date,
+                 feed_id):
         self.title = title
+        self.summary = summary
         self.description = description
         self.link = link
-        self.pubdate = pubdate
+        self.pub_date = pub_date
+        self.parse_date = parse_date
+        self.feed_id = feed_id
 
     def __repr__(self):
         return '<Entry %r>' % self.title
