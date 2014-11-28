@@ -68,8 +68,13 @@ def index():
 def profile(username):
     return NotImplementedError
 
+@login_required
 @app.route('/add', methods=['POST'])
 def add_feed():
-    pass
+    a_add_feed(title=request.form['title'],
+               url=request.form['url'],
+               tags=request.form['tags'],
+               user_id=g.user.id)
+    return redirect(url_for('index'))
     
 # end main views

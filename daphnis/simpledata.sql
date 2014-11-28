@@ -6,7 +6,9 @@ CREATE TABLE tag (
 	PRIMARY KEY (id), 
 	UNIQUE (name)
 );
-INSERT INTO "tag" VALUES(1,'test-tag');
+INSERT INTO "tag" VALUES(1,'uncategorized');
+INSERT INTO "tag" VALUES(2,'sport');
+INSERT INTO "tag" VALUES(3,'cinema');
 CREATE TABLE entry (
 	id INTEGER NOT NULL, 
 	title VARCHAR(120), 
@@ -38,6 +40,9 @@ CREATE TABLE feed (
 	FOREIGN KEY(user_id) REFERENCES user (id)
 );
 INSERT INTO "feed" VALUES(1,'test feed','http://www.google.com',1);
+INSERT INTO "feed" VALUES(2,'another test','http://stocazzo.com',1);
+INSERT INTO "feed" VALUES(3,'ancora uno ','http://www.none.com',1);
+
 CREATE TABLE tagmap (
 	tag_id INTEGER, 
 	feed_id INTEGER, 
@@ -45,4 +50,8 @@ CREATE TABLE tagmap (
 	FOREIGN KEY(feed_id) REFERENCES feed (id)
 );
 INSERT INTO "tagmap" VALUES(1,1);
+INSERT INTO "tagmap" VALUES(2,2);
+INSERT INTO "tagmap" VALUES(2,3);
+INSERT INTO "tagmap" VALUES(3,3);
+
 COMMIT;
