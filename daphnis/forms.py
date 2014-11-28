@@ -69,6 +69,7 @@ class RegisterForm(Form):
         return True
 
 class AddFeedForm(Form):
+    title = TextField(u'Title')
     url = TextField(u'URL', [Required()])
     tags = TextField(u'tags')
 

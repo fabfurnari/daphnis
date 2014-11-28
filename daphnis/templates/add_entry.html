@@ -12,6 +12,7 @@
 <form method=post action="{{ url_for('add_feed') }}">
   {{ form.hidden_tag() }}
   <dl>
+    {{ render_field(form.title) }}
     {{ render_field(form.url) }}
     {{ render_field(form.tags) }}
   </dl>
@@ -22,3 +23,4 @@
 </div>
 
 </div>
+

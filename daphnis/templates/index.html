@@ -3,17 +3,32 @@
 <link rel="stylesheet" type="text/css" href="/static/css/jquery.tagsinput.css"
       />
 {% endblock -%}
+
 {% block body %}
-
-<h1>Nothing so far...</h1>
-
 {% if current_user.is_authenticated() %}
+    <div class="container">
+      <h1>Feeds</h1>
+      <table class="table">
+        {% for f in feeds %}
+        <tr>
+            <td>
+              <a href="{{ f.url }}" target="_blank">{{ f.title }}</a>
+            </td>
+            <td>
+            {% for t in f.tags %}
+                <button class="btn btn-sm" disabled="disabled">{{ t }}</button>
+            {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
     {% include 'add_entry.html' %}
 {% endif %}
-
 {% endblock -%}
 
 {% block localjs %}
 <script src="/static/js/jquery.tagsinput.min.js"></script>
 <script type="text/javascript" src="/static/js/daphnis-index.js"></script>
 {% endblock -%}
+

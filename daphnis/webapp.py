@@ -5,6 +5,7 @@ from flask.ext.login import LoginManager, login_user, \
 from daphnis import app, db
 from daphnis.model import *
 from daphnis.forms import *
+from daphnis.aux import *
 
 # login and logout
 
@@ -55,7 +56,13 @@ def logout():
 @app.route('/')
 def index():
     form = AddFeedForm()
-    return render_template('index.html', form=form)
+    if current_user.is_authenticated():
+        feeds = a_show_feeds(user=g.user.username)
+    else:
+        feeds = []
+    return render_template('index.html',
+                           form=form,
+                           feeds=feeds)
 
 @app.route('/user/<username>')
 def profile(username):
@@ -65,5 +72,4 @@ def profile(username):
 def add_feed():
     pass
     
-
 # end main views
