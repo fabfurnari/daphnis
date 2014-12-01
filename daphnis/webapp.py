@@ -74,7 +74,24 @@ def add_feed():
     a_add_feed(title=request.form['title'],
                url=request.form['url'],
                tags=request.form['tags'],
-               user_id=g.user.id)
+               author=g.user.id)
     return redirect(url_for('index'))
+
+@login_required
+@app.route('/del/<int:fid>', methods='GET')
+def del_feed(fid):
+    return NotImplementedError
+
+@login_required
+@app.route('/manage', methods=['GET', 'POST'])
+def manage_feed():
+    if request.method == 'GET':
+        f = AddFeedForm()
+        feeds = a_show_feeds(user=g.user.username)
+        print feeds
+        return render_template('manage.html', form=f,feeds=feeds)
+    else:
+        pass
+    
     
 # end main views

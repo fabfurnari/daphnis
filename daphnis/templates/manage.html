@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block localcss %}
+<link rel="stylesheet" type="text/css" href="/static/css/jquery.tagsinput.css"
+      />
+{% endblock -%}
+
+{% block body %}
+<div class="container">
+  <h1>Manage feeds</h1>
+  <div class="container">
+    <h2>Add a new feed</h2>
+    {% include 'add_entry.html' %}
+  </div>
+  <hr />
+  <div class="container">
+    <h2>Your feeds</h2>
+  <table class="table">
+    {% for f in feeds %}
+    <tr>
+      <td>
+        <a href="{{ f.url }}" target="_blank">{{ f.title }}</a>
+      </td>
+      <td>
+        <p class="text-muted">{{ f.url }}</p>
+      </td>
+      <td>
+        {% for t in f.tags %}
+        <button class="btn btn-sm" disabled="disabled">{{ t }}</button>
+        {% endfor %}
+      </td>
+      <td>
+        <a class="btn btn-danger btn-xs" 
+           onClick="return confirm('Are you sure?');"
+           href="{{ url_for('del_feed',fid=f.id)}}">
+          <span class="glyphicon glyphicon-remove"></span>
+        </a>
+      </td>  
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+</div>
+
+{% endblock -%}
+
+{% block localjs %}
+<script src="/static/js/jquery.tagsinput.min.js"></script>
+<script type="text/javascript" src="/static/js/daphnis-index.js"></script>
+{% endblock -%}
+
+
