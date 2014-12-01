@@ -10,7 +10,7 @@ class User(db.Model):
     registered_on = db.Column(db.DateTime)
     last_login = db.Column(db.DateTime)
     feeds = db.relationship('Feed',backref='author',lazy='dynamic')
-
+    
     def __init__(self, username, email, password):
         self.username = username
         self.email = email
@@ -46,17 +46,19 @@ class Feed(db.Model):
     __tablename__ = 'feed'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), unique=True)
-    url = db.Column(db.String(200), unique=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    tags = db.relationship('Tag', secondary=tagmap,
-                           backref='feeds')
+    url = db.Column(db.String(200))
+    author = db.Column(db.Integer, db.ForeignKey('user.id'))
+    tags = db.relationship('Tag',secondary=tagmap,backref='feeds')
     entries = db.relationship('Entry', backref='site',lazy='dynamic')
 
-    def __init__(self, title, url, tags, user_id):
+    def __init__(self, title, url, tags, author, users):
+        '''
+
+        '''
         self.title = title
         self.url = url
         self.tags = tags
-        self.user_id = user_id
+        self.author = author
         
     def __repr__(self):
         return '<Feed %r>' % self.title
@@ -82,7 +84,7 @@ class Entry(db.Model):
     link = db.Column(db.String(200))
     pub_date = db.Column(db.DateTime)
     parse_date = db.Column(db.DateTime)
-    feed_id = db.Column(db.ForeignKey('feed.id'))
+    feed_url = db.Column(db.ForeignKey('feed.url'))
 
     def __init__(self,
                  title,
@@ -91,14 +93,14 @@ class Entry(db.Model):
                  link,
                  pub_date,
                  parse_date,
-                 feed_id):
+                 feed_url):
         self.title = title
         self.summary = summary
         self.description = description
         self.link = link
         self.pub_date = pub_date
         self.parse_date = parse_date
-        self.feed_id = feed_id
+        self.feed_url = feed_url
 
     def __repr__(self):
         return '<Entry %r>' % self.title

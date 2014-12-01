@@ -1,5 +1,11 @@
 PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
+CREATE TABLE tag (
+	id INTEGER NOT NULL, 
+	name VARCHAR(80), 
+	PRIMARY KEY (id), 
+	UNIQUE (name)
+);
 CREATE TABLE user (
 	id INTEGER NOT NULL, 
 	username VARCHAR(80), 
@@ -11,36 +17,38 @@ CREATE TABLE user (
 	UNIQUE (username), 
 	UNIQUE (email)
 );
-CREATE TABLE tag (
-	id INTEGER NOT NULL, 
-	name VARCHAR(80), 
-	PRIMARY KEY (id), 
-	UNIQUE (name)
-);
 CREATE TABLE feed (
 	id INTEGER NOT NULL, 
 	title VARCHAR(200), 
 	url VARCHAR(200), 
-	user_id INTEGER, 
+	author INTEGER, 
 	PRIMARY KEY (id), 
 	UNIQUE (title), 
 	UNIQUE (url), 
-	FOREIGN KEY(user_id) REFERENCES user (id)
-);
-CREATE TABLE entry (
-	id INTEGER NOT NULL, 
-	title VARCHAR(120), 
-	description TEXT, 
-	link VARCHAR(200), 
-	pubdate DATETIME, 
-	feed_id INTEGER, 
-	PRIMARY KEY (id), 
-	FOREIGN KEY(feed_id) REFERENCES feed (id)
+	FOREIGN KEY(author) REFERENCES user (id)
 );
 CREATE TABLE tagmap (
 	tag_id INTEGER, 
 	feed_id INTEGER, 
 	FOREIGN KEY(tag_id) REFERENCES tag (id), 
+	FOREIGN KEY(feed_id) REFERENCES feed (id)
+);
+CREATE TABLE entry (
+	id INTEGER NOT NULL, 
+	title VARCHAR(120), 
+	summary TEXT, 
+	description TEXT, 
+	link VARCHAR(200), 
+	pub_date DATETIME, 
+	parse_date DATETIME, 
+	feed_id INTEGER, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(feed_id) REFERENCES feed (id)
+);
+CREATE TABLE usermap (
+	user_id INTEGER, 
+	feed_id INTEGER, 
+	FOREIGN KEY(user_id) REFERENCES user (id), 
 	FOREIGN KEY(feed_id) REFERENCES feed (id)
 );
 COMMIT;
