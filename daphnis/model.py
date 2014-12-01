@@ -43,6 +43,12 @@ tagmap = db.Table('tagmap', db.Model.metadata,
     )
     
 class Feed(db.Model):
+    '''
+    There can be duplicates feed entries (same URL) mainly because of different tags
+    per user.
+    The RSS-fetching script fetches the URLs only once and populates the entry table
+    (should be indexed by URL)
+    '''
     __tablename__ = 'feed'
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), unique=True)
