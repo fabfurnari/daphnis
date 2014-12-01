@@ -15,6 +15,7 @@ def a_show_feeds(user=None):
         r = []
         for feed in u.feeds:
             d = dict()
+            d['id'] = feed.id
             d['title'] = feed.title
             d['url'] = feed.url
             d['tags'] = [ t.name for t in feed.tags ]
@@ -24,7 +25,7 @@ def a_show_feeds(user=None):
     else:
         return None
 
-def a_add_feed(title,url,tags,user_id):
+def a_add_feed(title,url,tags,author):
     '''
     Creates an entry. If tag does not exists creates the tag
     too.
@@ -39,7 +40,7 @@ def a_add_feed(title,url,tags,user_id):
             db.session.add(t)
         tag_list.append(t)
         
-    f = Feed(title=title,url=url,tags=tag_list,user_id=user_id)
+    f = Feed(title=title,url=url,tags=tag_list,author=author)
     db.session.add(f)
     db.session.commit()
 
