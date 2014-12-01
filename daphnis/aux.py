@@ -28,9 +28,7 @@ def a_show_feeds(user=None):
 def a_add_feed(title,url,tags,author):
     '''
     Creates an entry. If tag does not exists creates the tag
-    too.
-    TODO:
-    * check duplicate entries (?)
+    too
     '''
     tag_list = []
     for tag in tags.split(','):
