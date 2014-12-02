@@ -39,6 +39,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             {% if current_user.is_authenticated() %}
+            <li><a href="{{ url_for('manage_feed') }}">Manage</a></li>
             <li><a href="{{ url_for('profile', username=current_user.username)
                          }}">My Profile</a></li>
             <li><a href="{{ url_for('logout') }}">Logout {{
@@ -85,6 +86,7 @@
     {% endblock %}
   </body>
 </html>
+
 
 
 
