@@ -9,7 +9,7 @@ class User(db.Model):
     password = db.Column(db.String(120))
     registered_on = db.Column(db.DateTime)
     last_login = db.Column(db.DateTime)
-    feeds = db.relationship('Feed',backref='author',lazy='dynamic')
+    feeds = db.relationship('Feed',backref='o_author',lazy='dynamic')
     
     def __init__(self, username, email, password):
         self.username = username
