@@ -1,5 +1,5 @@
 from daphnis import db
-from daphnis.model import *
+from daphnis.model import Tag, User, Feed, Entry
 import feedparser
 from threading import *
 import copy
