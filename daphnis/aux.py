@@ -55,14 +55,16 @@ def parse_feed(user=None):
     for feed in feeds:
         # horrible
         f = Feed.query.filter_by(url=feed['url']).first()
-        for item in feed['item']:
-            e = Entry(title=item['title'],
-                      summary=item['summary'],
-                      link=item['link'],
-                      pub_date=item['date'],
-                      parse_date=item['date_parsed'],
-                      feed_id = f.id)
-            db.session.add(e)
+        for e in feed['entries']:
+            print e.updated # see feedparser doc
+            new_entry = Entry(title=e['title'],
+                              summary=e['summary'],
+                              link=e['link'],
+                              pub_date=e['published'],
+                              parse_date=e['date_parsed'],
+                              description=e['description']
+                              feed_id = e.id)
+            db.session.add(new_entry)
     db.commit()
             
 class Future:
